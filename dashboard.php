@@ -3,6 +3,14 @@ session_start();
 if (!isset($_SESSION['username'])) {
     // User is already logged in, redirect to welcome page  
     header("Location: login.php");
+    exit(); 
+}
+
+// tambahkan counter untuk menghitung jumlah refresh
+if (!isset($_SESSION['counter'])) {
+    $_SESSION['counter'] = 1;
+} else {
+    $_SESSION['counter']++;
 }
 ?>
 <html>
@@ -18,6 +26,6 @@ if (!isset($_SESSION['username'])) {
         </style>
     </head>
     <body>
-        <h1><?php echo "Selamat datang " . $_SESSION['username']; ?></h1>
+        <h1><?php echo "Selamat datang " . $_SESSION['username'] . " ke " . $_SESSION['counter']; ?></h1>
     </body>
 </html>

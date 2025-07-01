@@ -7,4 +7,4 @@
 4.  Kemudian yang terakhir jalankan cloning.
 
 
-sudah selesai untuk penambahan UTS
+sudah selesai untuk penambahan UAS nya (nama username dan password nya = admin dan 123456)

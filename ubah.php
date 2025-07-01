@@ -8,4 +8,3 @@ $_SESSION["daftar"][$i] = [
 ];
 
 header("Location: dashboard.php");
-?>

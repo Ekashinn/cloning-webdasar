@@ -1,3 +1,29 @@
+<?php
+session_start();
+
+// Data user bisa kamu ganti atau ambil dari database nantinya
+$users = [
+    'admin' => '123456',
+    'user1' => 'password1'
+];
+
+$error = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    // Validasi login
+    if (isset($users[$username]) && $users[$username] === $password) {
+        $_SESSION['username'] = $username;
+        header("Location: dashboard.bootstrap.php");
+        exit();
+    } else {
+        $error = "Username atau password salah!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
 
@@ -255,16 +281,24 @@
         </ul>
     </div>
     <main class="form-signin w-100 m-auto">
-        <form>
+        <form action="login.bootstrap.php" method="post">
             <div class="text-center"><img class="mb-4" src="https://usm.ac.id/wp-content/uploads/2022/09/Logo-USM-Color.png" alt="" height="130"></div>
             <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
-            <div class="form-floating"> <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"> <label for="floatingInput">Email address</label> </div>
-            <div class="form-floating"> <input type="password" class="form-control" id="floatingPassword" placeholder="Password"> <label for="floatingPassword">Password</label> </div>
+
+            <?php if (!empty($error)) : ?>
+                <div class="alert alert-danger text-center" role="alert">
+                    <?= $error ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="form-floating"> <input type="text" name="username" class="form-control" id="floatingInput" placeholder="Username" required><label for="floatingInput">Email address</label> </div>
+            <div class="form-floating"> <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required> <label for="floatingPassword">Password</label> </div>
             <div class="form-check text-start my-3"> <input class="form-check-input" type="checkbox" value="remember-me" id="checkDefault"> <label class="form-check-label" for="checkDefault">
                     Remember me
                 </label> </div> <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
             <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2025</p>
         </form>
+
     </main>
     <!-- <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" class="astro-vvvwv3sm"></script> -->
     <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"></script>
